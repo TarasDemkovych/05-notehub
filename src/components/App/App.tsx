@@ -10,25 +10,58 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Pagination from "../Pagination/Pagination";
 
-export default function App() {
-  const { movies, isLoading, isError, searchMovies } = useMovies();
-  const { selectedMovie, selectMovie, closeModal } = useSelectedMovie();
+function App() {
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery] = useDebounce(query, 400);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedQuery]);
+
+  const [isModal, setIsModal] = useState(false);
+
+  const handleCreateNote = () => {
+    setIsModal(true);
+  };
+  const closeModal = () => {
+    setIsModal(false);
+  };
+
+  const { data, isError, isLoading, isFetching, isSuccess } = useQuery({
+    queryKey: ["notes", debouncedQuery, page],
+    queryFn: () => fetchNotes({ page: page, search: debouncedQuery }),
+    placeholderData: keepPreviousData,
+  });
 
   return (
-    <div className={css.app}>
-      <Toaster position="top-center" />
-      <SearchBar onSubmit={searchMovies} />
-
-      {movies.length > 0 && (
-        <MovieGrid movies={movies} onSelect={selectMovie} />
-      )}
-
-      {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
-
-      {selectedMovie && (
-        <MovieModal movie={selectedMovie} onClose={closeModal} />
-      )}
-    </div>
+    <>
+      <div className={css.app}>
+        <header className={css.toolbar}>
+          <SearchBox
+            value={query}
+            onChange={(query: string) => setQuery(query)}
+          />
+          {isSuccess && data.totalPages > 1 && (
+            <Pagination
+              pageCount={data.totalPages}
+              currentPage={page}
+              onPageChange={(selectedPage: number) => setPage(selectedPage)}
+            />
+          )}
+          {
+            <button onClick={handleCreateNote} className={css.button}>
+              Create note +
+            </button>
+          }
+        </header>{" "}
+        {(isLoading || isFetching) && <Loader />}
+        {(isError || data?.notes.length === 0) && <ErrorMessage />}
+        {data?.notes && <NoteList notes={data.notes} />}
+      </div>
+      {isModal && <NoteModal onClose={closeModal} />}
+    </>
   );
 }
+
+export default App;

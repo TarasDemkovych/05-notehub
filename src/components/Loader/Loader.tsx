@@ -1,38 +1,11 @@
-import css from "./Loader.module.css";
+import styles from "./Loader.module.css";
 
 export default function Loader() {
   return (
-    <div className={style.cat}>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
-      <div className={style.cat__segment}></div>
+    <div className={styles.loader} role="status" aria-label="Завантаження...">
+      <span className={styles.dot}></span>
+      <span className={styles.dot}></span>
+      <span className={styles.dot}></span>
     </div>
   );
 }
