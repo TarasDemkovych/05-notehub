@@ -1,12 +1,14 @@
-import { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
 import css from "./App.module.css";
-import SearchBar from "../SearchBar/SearchBar";
-import MovieGrid from "../MovieGrid/MovieGrid";
+import NoteList from "../NoteList/NoteList";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useDebounce } from "use-debounce";
+import { fetchNotes } from "../../services/noteService";
+import NoteModal from "../NoteModal/NoteModal";
+import SearchBox from "../SearchBox/SearchBox";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import MovieModal from "../MovieModal/MovieModal";
-import { useMovies } from "../../hooks/useMovies";
-import { useSelectedMovie } from "../../hooks/useSelectedMovie";
+import Pagination from "../Pagination/Pagination";
 
 export default function App() {
   const { movies, isLoading, isError, searchMovies } = useMovies();

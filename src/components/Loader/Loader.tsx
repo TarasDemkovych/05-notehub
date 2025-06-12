@@ -2,8 +2,37 @@ import css from "./Loader.module.css";
 
 export default function Loader() {
   return (
-    <>
-      <p className={css.text}>Loading movies, please wait...</p>
-    </>
+    <div className={style.cat}>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+      <div className={style.cat__segment}></div>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { fetchMovies } from "../services/movieService"
-import { toast } from "react-hot-toast";
-import type { Movie } from "../types/movie";
+import { useState } from 'react';
+import { fetchMovies } from '../services/noteService';
+import { toast } from 'react-hot-toast';
+import type { Movie } from '../types/note';
 
 export function useMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -16,7 +16,7 @@ export function useMovies() {
     try {
       const data = await fetchMovies({ query });
       if (data.results.length === 0) {
-        throw new Error("No movies found for your request.");
+        throw new Error('No movies found for your request.');
       }
       setMovies(data.results);
     } catch (error) {

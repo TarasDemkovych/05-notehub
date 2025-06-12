@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { Movie } from "../types/movie";
+import { useState } from 'react';
+import type { Movie } from '../types/note';
 
 export function useSelectedMovie() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
