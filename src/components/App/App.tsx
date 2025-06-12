@@ -1,35 +1,36 @@
-import { useEffect, useState } from "react";
-import css from "./App.module.css";
-import NoteList from "../NoteList/NoteList";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useDebounce } from "use-debounce";
-import { fetchNotes } from "../../services/noteService";
-import NoteModal from "../NoteModal/NoteModal";
-import SearchBox from "../SearchBox/SearchBox";
-import Loader from "../Loader/Loader";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import Pagination from "../Pagination/Pagination";
+import { useEffect, useState } from 'react';
+import css from './App.module.css';
+import NoteList from '../NoteList/NoteList';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useDebounce } from 'use-debounce';
+import { fetchNotes } from '../../services/noteService';
+import NoteModal from '../NoteModal/NoteModal';
+import SearchBox from '../SearchBox/SearchBox';
+import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Pagination from '../Pagination/Pagination';
 
 function App() {
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 400);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   useEffect(() => {
     setPage(1);
   }, [debouncedQuery]);
 
-  const [isModal, setIsModal] = useState(false);
+  
 
   const handleCreateNote = () => {
-    setIsModal(true);
+    setIsModalOpen(true);
   };
   const closeModal = () => {
-    setIsModal(false);
+    setIsModalOpen(false);
   };
 
   const { data, isError, isLoading, isFetching, isSuccess } = useQuery({
-    queryKey: ["notes", debouncedQuery, page],
+    queryKey: ['notes', debouncedQuery, page],
     queryFn: () => fetchNotes({ page: page, search: debouncedQuery }),
     placeholderData: keepPreviousData,
   });
@@ -54,12 +55,16 @@ function App() {
               Create note +
             </button>
           }
-        </header>{" "}
-        {(isLoading || isFetching) && <Loader />}
-        {(isError || data?.notes.length === 0) && <ErrorMessage />}
+        </header>{' '}
+        {isLoading && <Loader />}
+        {isFetching && <Loader />}
+        {isError && <ErrorMessage />}
+        {isSuccess && data.notes.length === 0 && (
+          <p className={css.empty}>No notes found.</p>
+        )}
         {data?.notes && <NoteList notes={data.notes} />}
       </div>
-      {isModal && <NoteModal onClose={closeModal} />}
+      {isModalOpen && <NoteModal onClose={closeModal} />}
     </>
   );
 }
