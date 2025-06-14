@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import css from './App.module.css';
 import NoteList from '../NoteList/NoteList';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -15,12 +15,6 @@ function App() {
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 400);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  useEffect(() => {
-    setPage(1);
-  }, [debouncedQuery]);
-
-  
 
   const handleCreateNote = () => {
     setIsModalOpen(true);
@@ -41,7 +35,10 @@ function App() {
         <header className={css.toolbar}>
           <SearchBox
             value={query}
-            onChange={(query: string) => setQuery(query)}
+            onChange={(query: string) => {
+              setQuery(query);
+              setPage(1);
+            }}
           />
           {isSuccess && data.totalPages > 1 && (
             <Pagination
